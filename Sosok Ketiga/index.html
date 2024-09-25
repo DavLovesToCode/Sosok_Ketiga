@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bully Report Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: url('img.png') no-repeat center center; /* Replace with your image path */
+            background-size: cover; /* Ensures the background image covers the entire body */
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full height for vertical centering */
+        }
+        .form-container {
+            max-width: 500px;
+            width: 100%; /* Ensures it is responsive */
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background for the form */
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 20px; /* Increased margin for better spacing between form elements */
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px; /* Adjusted padding */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            transition: border-color 0.3s;
+            background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white background for input fields */
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+        }
+        input:focus, textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Form Laporan Bully</h2>
+    <form id="bullyForm">
+        <div class="form-group">
+            <label for="victimName">Nama Korban (Anonim)</label>
+            <input type="text" id="victimName" name="victimName" placeholder="Masukkan nama korban (anonim)">
+        </div>
+        <div class="form-group">
+            <label for="perpetratorName">Nama Pelaku</label>
+            <input type="text" id="perpetratorName" name="perpetratorName" placeholder="Masukkan nama pelaku">
+        </div>
+        <div class="form-group">
+            <label for="bullyType">Tipe Bully</label>
+            <input type="text" id="bullyType" name="bullyType" placeholder="Masukkan tipe bully">
+        </div>
+        <div class="form-group">
+            <label for="chronology">Kronologi</label>
+            <textarea id="chronology" name="chronology" rows="4" placeholder="Jelaskan kronologi kejadian"></textarea>
+        </div>
+        <button type="submit">Kirim Laporan</button>
+    </form>
+    <div class="footer">*Informasi yang diberikan akan dirahasiakan</div>
+</div>
+
+<script>
+    document.getElementById('bullyForm').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Get form values
+        const victimName = document.getElementById('victimName').value;
+        const perpetratorName = document.getElementById('perpetratorName').value;
+        const bullyType = document.getElementById('bullyType').value;
+        const chronology = document.getElementById('chronology').value;
+
+        // Create an object to store the data
+        const report = {
+            victimName,
+            perpetratorName,
+            bullyType,
+            chronology,
+            timestamp: new Date().toLocaleString() // Add a timestamp
+        };
+
+        // Get existing reports from local storage or create an empty array
+        const reports = JSON.parse(localStorage.getItem('bullyReports')) || [];
+
+        // Add the new report to the array
+        reports.push(report);
+
+        // Save the updated reports back to local storage
+        localStorage.setItem('bullyReports', JSON.stringify(reports));
+
+        // Optionally, display a success message
+        alert('Laporan berhasil dikirim!');
+
+        // Clear the form fields
+        this.reset();
+    });
+</script>
+
+</body>
+</html>
